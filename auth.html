@@ -1,0 +1,219 @@
+<!DOCTYPE html> <!--ĐÂY LÀ GIAO DIỆN (HTML+CSS) CỦA TRANG ĐĂNG KÍ , ĐĂNG NHẬP -->
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập / Đăng ký</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* background: linear-gradient(135deg, #4f46e5, #06b6d4); */
+    }
+
+    .container {
+      width: 360px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 24px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f1f5f9;
+    }
+
+    .tabs label {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      cursor: pointer;
+      font-weight: 600;
+      color: #475569;
+      transition: 0.3s;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    #login:checked ~ .tabs label[for="login"],
+    #register:checked ~ .tabs label[for="register"] {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    form {
+      display: none;
+    }
+
+    #login:checked ~ .login-form,
+    #register:checked ~ .register-form {
+      display: block;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #334155;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5f5;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #4f46e5;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .social {
+      margin-top: 16px;
+    }
+
+    .social button {
+      background: #fff;
+      color: #111827;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .social button.google {
+      border-color: #ea4335;
+      color: #ea4335;
+    }
+
+    .social button.facebook {
+      border-color: #1877f2;
+      color: #1877f2;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 14px 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="radio" name="tab" id="login" checked />
+    <input type="radio" name="tab" id="register" />
+
+    <div class="tabs">
+      <label for="login">Đăng nhập</label>
+      <label for="register">Đăng ký</label>
+    </div>
+
+    <form id="submit2" class="login-form">
+      <h2>Đăng nhập</h2>
+      <div class="field">
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="example@gmail.com" />
+      </div>
+      <div class="field">
+        <label>Mật khẩu</label>
+        <input id="loginPassword"  type="password" placeholder="••••••••" />
+      </div>
+      <button type="submit">Đăng nhập</button>
+      <div class="divider">Hoặc đăng nhập bằng</div>
+      <div class="social">
+        <button id="ggLogin" type="button" class="google">Google</button>
+        <button id="fbLogin" type="button" class="facebook">Facebook</button>
+      </div>
+      <div class="note">Chỉ là giao diện HTML + CSS</div>
+    </form>
+
+    <form id="submit1" class="register-form">
+      <h2>Đăng ký</h2>
+      <div class="field">
+        <label>Tên người dùng</label>
+        <input id="userName" type="text" placeholder="Nguyễn Văn A" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="userEmail" placeholder="example@gmail.com" />
+      </div>
+      <div class="field">
+        <label>Mật khẩu</label>
+        <input id="userPassword" type="password" placeholder="••••••••" />
+      </div>
+      <div class="field">
+        <label>Nhập lại mật khẩu</label>
+        <input type="password" placeholder="••••••••" />
+      </div>
+      <button  type="submit">Đăng ký</button>
+      <div class="divider">Hoặc đăng ký bằng</div>
+      <div class="social">
+        <button id="ggSignUp" type="button" class="google">Google</button>
+        <button id="fbLoginUp" type="button" class="facebook">Facebook</button>
+      </div>
+      <div class="note">Chưa có xử lý dữ liệu</div>
+    </form>
+  </div>
+</body>
+
+<script type="module" src="config.js"></script>
+<script type="module" src="auth.js"></script>
+
+
+
+</html>

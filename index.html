@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quản lý trường học</title>
+  <link rel="icon" href="https://images.icon-icons.com/2070/PNG/512/school_icon_126269.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<body>
+  
+
+<div class="wrap">      
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">SH</div>
+          <div>
+            <h1>SchoolHub</h1>
+            <div class="small">Quản lý trường học</div>
+          </div>
+        </div>
+        <nav>
+          <a class="switch dashboard active" page="">Tổng quan</a>
+          <a class="switch students">Học sinh</a>
+          <a class="switch teachers" page="">Giáo viên</a>
+          <a class="switch classes" page="">Lớp học</a>
+          <a class="switch scores" page="">Điểm số</a>
+          <a class="switch time" page="">Thời khóa biểu</a>
+          <a class="switch attendance" page="">Điểm danh</a>
+          <a class="switch account" page="">Tài khoản</a>
+          <a class="switch setting" page="">Thiết lập</a>
+        </nav>
+    </aside>
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Vui lòng nhập mã mời </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal">    </button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <input id="codeInput" type="text">
+          <button id="submitCode" type="button" class="btn btn-primary">Submit</button>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <main class="main">
+    <button id="openModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Nhập mã mời</button>
+
+    <div class="header">
+          <div class="search">
+            <input id="findInput" placeholder="Tìm học sinh, giáo viên hoặc lớp" />
+            <a  id="findSubmit" class="btn ghost">Tìm</a>
+          </div>
+          <div class="user">
+            <div style="text-align:right">
+              <div class="small">Xin chào, Quản trị</div>
+              <div style="font-weight:700">Trường ABC</div>
+            </div>
+            <div class="dropdown">
+                    <div   class="avatar  " data-bs-toggle="dropdown">Q </div>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+                  <li><a id="signOut" class="dropdown-item" href="#">Đăng xuất</a></li>
+                
+                </ul>
+            </div>
+          </div>
+      </div>
+      
+
+
+
+    <div id="dashboard" class="page dashboard display">
+      <div class="grid">
+        <div class="card">
+          <h3>Học sinh</h3>
+          <div class="kpi">0</div>
+        </div>
+        <div class="card">
+          <h3>Giáo viên</h3>
+          <div class="kpi">0</div>
+        </div>
+        <div class="card">
+          <h3>Lớp học</h3>
+          <div class="kpi">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page students"  id="students">
+      <div class="content">
+        <section class="panel">
+          <h2 style="margin:0 0 12px 0">Danh sách học sinh</h2>
+          <div style="margin-bottom:10px; display:flex; gap:10px">
+            <select id="filterClass1" class="form-select" style="max-width:200px">
+              <option value="all">Tất cả lớp</option>
+            </select>
+          </div>
+          <div style="overflow:auto">
+            <table>
+              <thead>
+                <tr><th>Mã</th><th>Họ tên</th><th>Lớp</th><th>Tuổi</th><th>Hành động</th></tr>
+              </thead>
+              <tbody id="studentsList">
+
+                <!-- <tr>
+                  <td>HS001</td>
+                  <td>Nguyễn Văn A</td>
+                  <td>9A</td><td>15</td>
+                  <td>
+                    <div class="actions">
+                     <a class="btn ghost">Xem</a>
+                     <a class="btn deleteStudent">Xóa</a></div>
+                  </td>
+                </tr> -->
+
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <aside class="panel">
+          <h3 style="margin-top:0">Thêm học sinh mới</h3>
+          <form action="#" id="addStudent">
+            <div  class="row"><input id="addStudentId" placeholder="Mã học sinh" required/></div>
+            <div  class="row"><input id="addStudentName" placeholder="Họ và tên" required/></div>
+            <div class="row">
+              <input id="addStudentClass" placeholder="Lớp" required />
+              <input id="addStudentAge" placeholder="Tuổi"  required/>
+            </div>
+            <div style="display:flex;gap:8px"><button class="btn" type="submit">Thêm</button><button class="btn ghost" type="reset">Xóa</button></div>
+          </form>
+          <div style="height:14px"></div>
+          <h4 style="margin:0 0 8px 0">Thông tin nhanh</h4>
+          <div class="stats">
+            <div><div class="small">Học sinh vắng hôm nay</div><div style="font-weight:700">12</div></div>
+            <div><div class="small">Sự kiện sắp tới</div><div style="font-weight:700">Hội thao (12/12)</div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+
+
+    <div class="page teachers"  id="teachers">    
+        <div class="content">
+        <section class="panel">
+          <h2 style="margin:0 0 12px 0">Danh sách giáo viên</h2>
+          <div style="margin-bottom:10px; display:flex; gap:10px">
+            <select id="filterClass2" class="form-select" style="max-width:200px">
+              <option value="all">Tất cả lớp</option>
+            </select>
+          </div>
+          <div style="overflow:auto">
+            <table>
+              <thead>
+                <tr><th>Mã</th><th>Họ tên</th><th>Lớp</th><th>Tuổi</th><th>Hành động</th></tr>
+              </thead>
+              <tbody id="teachersList">
+
+                <!-- <tr><td>GV001</td><td>Nguyễn Văn A</td><td>9A</td><td>15</td><td><div class="actions"><a class="btn ghost">Xem</a><a class="btn">Sửa</a></div></td></tr> -->
+
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <aside class="panel">
+          <h3 style="margin-top:0">Thêm giáo viên mới</h3>
+          <form action="#" id="addTeacher">
+            <div class="row"><input id="addTeacherId" placeholder="Mã giáo viên"  required></div>
+            <div class="row"><input id="addTeacherName" placeholder="Họ và tên"  required></div>
+            <div class="row">
+              <input id="addTeacherClass" placeholder="Lớp chủ nhiệm">
+              <input id="addTeacherAge" placeholder="Tuổi" required>
+            </div>
+            <div class="row">
+              <input id="addTeacherSubject" placeholder="Môn giảng dạy" required>
+            </div>
+            <div style="display:flex;gap:8px"><button class="btn" type="submit">Thêm</button><button class="btn ghost" type="reset">Xóa</button></div>
+          </form>
+          <div style="height:14px"></div>
+          <h4 style="margin:0 0 8px 0">Thông tin nhanh</h4>
+          <div class="stats">
+            <div><div class="small">Giáo viên nghỉ hôm nay</div><div style="font-weight:700">12</div></div>
+            <div><div class="small">Sự kiện sắp tới</div><div style="font-weight:700">Hội thao (12/12)</div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="page class"  id="classes">4</div>
+    <div class="page scores" id="scores">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="search">
+          <input placeholder="Tìm học sinh theo tên hoặc mã" />
+          <a class="btn ghost">Tìm</a>
+        </div>
+      </div>
+
+      <!-- FILTER -->
+      <section class="panel" style="margin-bottom:18px">
+        <div class="row">
+          <select>
+            <option>Lớp</option>
+            <option>9A</option>
+            <option>9B</option>
+          </select>
+          <select>
+            <option>Môn học</option>
+            <option>Toán</option>
+            <option>Vật lý</option>
+            <option>Hóa học</option>
+          </select>
+          <select>
+            <option>Học kỳ</option>
+            <option>HK1</option>
+            <option>HK2</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <!-- TABLE -->
+        <section class="panel">
+          <h2 style="margin:0 0 12px 0">Bảng điểm</h2>
+          <div style="overflow:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã HS</th>
+                  <th>Họ tên</th>
+                  <th>15'</th>
+                  <th>1 tiết</th>
+                  <th>Giữa kỳ</th>
+                  <th>Cuối kỳ</th>
+                  <th>TB</th>
+                  <th>Xếp loại</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HS001</td>
+                  <td>Nguyễn Văn A</td>
+                  <td>8</td>
+                  <td>7.5</td>
+                  <td>8</td>
+                  <td>8.5</td>
+                  <td><b>8.0</b></td>
+                  <td style="color:#2563eb;font-weight:600">Giỏi</td>
+                  <td>
+                    <div class="actions">
+                      <a class="btn ghost">Sửa</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>HS002</td>
+                  <td>Trần Thị B</td>
+                  <td>6</td>
+                  <td>6.5</td>
+                  <td>6</td>
+                  <td>7</td>
+                  <td><b>6.5</b></td>
+                  <td style="color:#f59e0b;font-weight:600">Trung bình</td>
+                  <td>
+                    <div class="actions">
+                      <a class="btn ghost">Sửa</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- FORM -->
+        <aside class="panel">
+          <h3 style="margin-top:0">Nhập / Cập nhật điểm</h3>
+
+          <form>
+            <div class="row">
+              <select>
+                <option>Chọn học sinh</option>
+                <option>HS001 - Nguyễn Văn A</option>
+                <option>HS002 - Trần Thị B</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <input placeholder="Điểm 15 phút" />
+              <input placeholder="Điểm 1 tiết" />
+            </div>
+
+            <div class="row">
+              <input placeholder="Giữa kỳ" />
+              <input placeholder="Cuối kỳ" />
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <button class="btn" type="submit">Lưu</button>
+              <button class="btn ghost" type="reset">Xóa</button>
+            </div>
+          </form>
+
+          <div style="height:14px"></div>
+
+          <h4 style="margin:0 0 8px 0">Thống kê nhanh</h4>
+          <div class="stats">
+            <div>
+              <div class="small">Điểm TB lớp</div>
+              <div style="font-weight:700">7.2</div>
+            </div>
+            <div>
+              <div class="small">HS giỏi</div>
+              <div style="font-weight:700">12</div>
+            </div>
+            <div>
+              <div class="small">HS dưới TB</div>
+              <div style="font-weight:700">3</div>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  
+    <div class="page attendance"  id="attendance">5</div>
+
+    <div class="page account"  id="account">
+      <div class="header">
+        <h2>Hồ sơ cá nhân</h2>
+      </div>
+
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
+
+        <!-- TRÁI -->
+        <div class="profile-left">
+          <div class="profile-avatar">Q</div>
+          <h3>Quản trị hệ thống</h3>
+          <div class="small">admin@schoolhub.edu.vn</div>
+
+          <div class="profile-meta">
+            <div>
+              <div class="small">Vai trò</div>
+              <strong>Administrator</strong>
+            </div>
+            <div>
+              <div class="small">Trường</div>
+              <strong>Trường ABC</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHẢI -->
+        <div class="profile-right">
+          <h3>Cập nhật thông tin</h3>
+
+          <form>
+            <div class="row">
+              <input placeholder="Họ và tên" value="Quản trị hệ thống">
+            </div>
+
+            <div class="row">
+              <input placeholder="Email" value="admin@schoolhub.edu.vn" disabled>
+            </div>
+
+            <div class="row">
+              <input placeholder="Số điện thoại">
+            </div>
+
+            <div class="row">
+              <input type="password" placeholder="Mật khẩu mới">
+            </div>
+
+            <div style="display:flex;gap:10px">
+              <button class="btn">Lưu thay đổi</button>
+              <button type="reset" class="btn ghost">Hủy</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <div class="page setting"  id="setting">7</div>
+  </main>
+
+</div>
+
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="config.js"></script>
+<script type="module" src="index.js"></script>
+
+
+</html>
