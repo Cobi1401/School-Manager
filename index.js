@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
 import {getAuth,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js"
-import {getFirestore,doc,getDoc,getDocs,addDoc,setDoc,updateDoc,deleteDoc,increment,collection} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"
+import {getFirestore,doc,getDoc,getDocs,documentId,addDoc,setDoc,updateDoc,deleteDoc,query,where,or,collection} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js"
 
 const firebaseConfig = {
 apiKey: "AIzaSyAgjuQ_mJSJb0QZCZpfOTNACVOXGpEOfqo",
@@ -53,7 +53,9 @@ const filterClass1 = document.getElementById("filterClass1")
 const filterClass2 = document.getElementById("filterClass2")
 let classes1 = new Set();
 let classes2 = new Set();
-let find = document.getElementById("find")
+let findSubmit = document.getElementById("findSubmit")
+let findInput = document.getElementById("findInput")
+let result = []
 
 //SHOW CODE INPUT
 function showInviteModal() {
@@ -358,6 +360,7 @@ onAuthStateChanged(auth,async(user)=>{
         alert(`Mã mời của tài khoản là:${docRef.id}`)
         setDoc(doc(db,"schools",curUser.schoolID,"studentsList",addStudentId.value),
         {
+            "id":addStudentId.value,
             "age":addStudentAge.value,
             "class":addStudentClass.value,
             "name":addStudentName.value
@@ -416,6 +419,7 @@ onAuthStateChanged(auth,async(user)=>{
         alert(`Mã mời của tài khoản là:${docRef.id}`)
         setDoc(doc(db,"schools",curUser.schoolID,"teachersList",addTeacherId.value),
         {
+            "id":addTeacherId.value,
             "age":addTeacherAge.value,
             "class":addTeacherClass.value,
             "name":addTeacherName.value
@@ -446,6 +450,31 @@ onAuthStateChanged(auth,async(user)=>{
         }])
         addTeacher.reset();
         setLoading(submitBtn, false);
+    })
+    findSubmit.addEventListener("click",async()=>{
+        switchs[1].click()
+        result = []
+        let students = query(
+            collection(db,"schools",curUser.schoolID,"studentsList"),
+            or(
+                where("id","==",findInput.value.trim()),
+                where("name","==",findInput.value.trim())
+            )
+        )
+        let snap  = await getDocs(students)
+        console.log(snap)
+        snap.forEach(doc=>{
+            result.push({
+                id:doc.id,
+                name:doc.data().name,
+                class:doc.data().class,
+                age:doc.data().age
+            })
+        })
+        console.log(result)
+        studentsList.innerHTML = ""
+        renderStudents(result)
+
     })
 
 });
