@@ -56,7 +56,7 @@ let classes2 = new Set();
 let findSubmit = document.getElementById("findSubmit")
 let findInput = document.getElementById("findInput")
 let result = []
-
+console.log(switchs[0].classList.length)
 //SHOW CODE INPUT
 function showInviteModal() {
   const modalEl = document.getElementById("myModal");
@@ -452,7 +452,6 @@ onAuthStateChanged(auth,async(user)=>{
         setLoading(submitBtn, false);
     })
     findSubmit.addEventListener("click",async()=>{
-        switchs[1].click()
         result = []
         let students = query(
             collection(db,"schools",curUser.schoolID,"studentsList"),
@@ -462,7 +461,22 @@ onAuthStateChanged(auth,async(user)=>{
             )
         )
         let snap  = await getDocs(students)
-        console.log(snap)
+        snap.forEach(doc=>{
+            result.push({
+                id:doc.id,
+                name:doc.data().name,
+                class:doc.data().class,
+                age:doc.data().age
+            })
+        })
+        let teachers = query(
+            collection(db,"schools",curUser.schoolID,"teachersList"),
+            or(
+                where("id","==",findInput.value.trim()),
+                where("name","==",findInput.value.trim())
+            )
+        )
+        snap  = await getDocs(teachers)
         snap.forEach(doc=>{
             result.push({
                 id:doc.id,
@@ -472,9 +486,9 @@ onAuthStateChanged(auth,async(user)=>{
             })
         })
         console.log(result)
-        studentsList.innerHTML = ""
-        renderStudents(result)
-
+        if(switchs[1].classList.length==3)renderStudents(result)
+        if(switchs[2].classList.length==3)renderTeachers(result)
+        
     })
 
 });
